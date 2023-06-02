@@ -1,61 +1,47 @@
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { styles } from './styles';
-import { Adapt, Select, Sheet } from 'tamagui';
 import { citiesMinasGerais } from '../../data/cities';
-
-const SelectCity = () => {
-    const [value, setValue] = useState<string>("Selecione uma cidade");
-
-    return (
-        <>
-            <Select id='city' value={value} onValueChange={setValue}>
-                <Select.Trigger width={280}>
-                    <Select.Value placeholder='Selecione uma cidade' />
-                </Select.Trigger>
-
-                <Adapt when="sm" platform="touch">
-                    <Sheet native modal dismissOnSnapToBottom>
-                        <Sheet.Frame>
-                            <Sheet.ScrollView>
-                                <Adapt.Contents />
-                            </Sheet.ScrollView>
-                        </Sheet.Frame>
-                        <Sheet.Overlay />
-                    </Sheet>
-                </Adapt>
-
-                <Select.Content zIndex={300}>
-                    <Select.Viewport>
-                        <Select.Group space="$4">
-                            {Object.keys(citiesMinasGerais).map((city, index) => (
-                                <Select.Item
-                                    index={index}
-                                    value={city}
-                                >
-                                    <Select.ItemText>{citiesMinasGerais[city]}</Select.ItemText>
-                                </Select.Item>
-                            )
-                            )}
-                        </Select.Group>
-                    </Select.Viewport>
-                </Select.Content>
-            </Select>
-        </>
-    )
-}
+import { SearchInput } from '../../components/SearchInput';
+import { ListItem } from '../../components/ListItem';
 
 export function Home() {
     return (
-        <>
-            <View style={styles.container}>
-                <Text style={styles.text}>Riodex</Text>
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.text}>Avoided</Text>
             </View>
+            <SearchInput />
             <View style={styles.listWrap}>
-                <SelectCity />
+                {ItemsFake.map((item, index) => (
+                    <>
+                        <ListItem
+                            key={index}
+                            itemData={item}
+                        />
+                    </>
+                ))}
             </View>
-        </>
+        </View>
     );
 }
 
 
+const ItemsFake = [
+    {
+        name: "Avoided",
+        servicesIncluded: "Avoided and Avoided",
+    },
+    {
+        name: "Avoided",
+        servicesIncluded: "Avoided and Avoided",
+    },
+    {
+        name: "Avoided",
+        servicesIncluded: "Avoided and Avoided",
+    },
+    {
+        name: "Avoided",
+        servicesIncluded: "Avoided and Avoided",
+    }
+];
