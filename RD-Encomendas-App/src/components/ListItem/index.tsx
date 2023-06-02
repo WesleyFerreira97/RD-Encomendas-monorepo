@@ -12,6 +12,13 @@ type ItemDataProps = {
 
 export function ListItem({ itemData }: ItemDataProps) {
     const { name, servicesIncluded } = itemData;
+
+    const tagStyle = {
+        coletaeentrega: "tagServiceLabel",
+        apenasEntrega: "tagServiceLabel",
+        apenasColeta: "tagServiceLabel",
+    }
+
     return (
         <TouchableOpacity style={styles.container}>
             <Text style={styles.label}>
