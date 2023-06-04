@@ -5,13 +5,24 @@ export const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        // backgroundColor: '#1D267D',
-        marginVertical: 7,
+        alignItems: 'center',
+        borderBottomColor: '#F0EBE3',
+        borderBottomWidth: 1,
         paddingVertical: 10,
         paddingHorizontal: 20,
+        flexWrap: 'wrap',
+    },
+    labelWrap: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingVertical: 20
     },
     label: {
         color: '#222',
+        alignItems: 'center',
+        paddingLeft: 4,
+    },
+    IconPinStyle: {
     },
     tagService: {
         backgroundColor: '#222',

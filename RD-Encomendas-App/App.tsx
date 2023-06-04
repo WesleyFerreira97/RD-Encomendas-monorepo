@@ -7,7 +7,6 @@ import config from './tamagui.config'
 import { TamaguiProvider, Theme } from 'tamagui'
 import { Home } from './src/screens/Home';
 
-
 export default function App() {
   const colorScheme = useColorScheme()
 

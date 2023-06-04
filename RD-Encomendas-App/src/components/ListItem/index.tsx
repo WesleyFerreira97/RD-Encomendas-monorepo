@@ -1,6 +1,9 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
+// import { AlarmClock } from '@tamagui/lucide-icons'
+import { MapPin } from 'phosphor-react-native';
+import { Button } from 'tamagui';
 
 type ItemDataProps = {
     itemData: {
@@ -8,7 +11,6 @@ type ItemDataProps = {
         servicesIncluded: string;
     }
 }
-
 
 export function ListItem({ itemData }: ItemDataProps) {
     const { name, servicesIncluded } = itemData;
@@ -21,9 +23,12 @@ export function ListItem({ itemData }: ItemDataProps) {
 
     return (
         <TouchableOpacity style={styles.container}>
-            <Text style={styles.label}>
-                {name}
-            </Text>
+            <View style={styles.labelWrap}>
+                <MapPin size={30} />
+                <Text style={styles.label}>
+                    {name}
+                </Text>
+            </View>
             <View style={styles.tagService}>
                 <Text style={styles.tagServiceLabel}>
                     {servicesIncluded}
