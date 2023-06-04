@@ -7,6 +7,7 @@ import { ListItem } from '../../components/ListItem';
 import { HomeHeader } from '../../components/HomeHeader';
 
 export function Home() {
+    // console.log(Object.values(ItemsFake));
     console.log(ItemsFake);
 
     return (
