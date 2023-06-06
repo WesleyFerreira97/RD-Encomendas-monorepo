@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { styles } from './styles';
 import { Input } from 'tamagui';
-import {
-    Text,
-    View,
-    TextInput,
-    NativeSyntheticEvent,
-    TextInputChangeEventData
-} from 'react-native';
+import { View } from 'react-native';
 
+type SearchInputProps = {
+    onChangeText: (...event: any[]) => void;
+    placeholder: string;
+}
 
-export function SearchInput() {
-    const [value, setValue] = useState('')
-
-    const handleChange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
-        setValue(event.nativeEvent.text)
-    }
+export function SearchInput({ ...rest }: SearchInputProps) {
 
     return (
         <View style={styles.inputContainer}>
@@ -30,12 +23,8 @@ export function SearchInput() {
                 placeholderTextColor="#fff"
                 cursorColor="#F34E4E"
                 outlineColor='#F34E4E'
-                onChange={(e) => handleChange(e)}
-                value={value}
-
+                onChangeText={rest.onChangeText}
             />
-
-            <Text style={{ color: "#222" }}>{value}</Text>
         </View>
     );
 }

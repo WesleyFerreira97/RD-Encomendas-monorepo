@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
-// import { AlarmClock } from '@tamagui/lucide-icons'
 import { MapPin } from 'phosphor-react-native';
 import { Button } from 'tamagui';
 

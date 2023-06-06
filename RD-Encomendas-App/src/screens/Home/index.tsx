@@ -10,32 +10,17 @@ import { Controller, useForm } from 'react-hook-form';
 
 export function Home() {
     const [cities, setCities] = useState("");
-    const { control } = useForm({
-        defaultValues: {
+    const { control, handleSubmit } = useForm();
 
-        }
-    })
+    const handleSearchForm = (data: any) => {
+        console.log(data, "form values");
+    }
 
     return (
         <View style={styles.container}>
-            <Controller
-                control={control}
-                name="search"
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <>
-                        <TextInput
-                            onChangeText={onChange}
-                            onBlur={onBlur}
-                            value={value}
-                            placeholder="Enter your name"
-                        />
-                    </>
-                )}
-            />
+
             <HomeHeader />
-            <SearchInput
-            // placeholder="Digite o nome da cidade"
-            />
+
 
             <View style={styles.listWrap}>
                 <FlatList
@@ -48,8 +33,20 @@ export function Home() {
                         />
                     )}
                 />
+                <Controller
+                    control={control}
+                    name="search"
+                    render={({ field: { onChange } }) => (
+                        <>
+                            <SearchInput
+                                onChangeText={onChange}
+                                placeholder="Digite o nome da cidade"
+                            />
+                        </>
+                    )}
+                />
             </View>
-            <Button icon={<Spinner />}>
+            <Button icon={<Spinner />} onPress={handleSubmit(handleSearchForm)}>
                 Submit
             </Button>
         </View>
@@ -59,11 +56,11 @@ export function Home() {
 
 const ItemsFake = [
     {
-        name: "Governador Valadares",
+        name: "Just a City",
         servicesIncluded: "Coleta e entrega",
     },
     {
-        name: "Teofilo Ottoni",
+        name: "Just Test",
         servicesIncluded: "Sem entrega e coleta",
     },
     {
