@@ -29,10 +29,10 @@ export function SearchInput() {
                 color="#fff"
                 placeholderTextColor="#fff"
                 cursorColor="#F34E4E"
-                onFocus={() => console.log('focus')}
                 outlineColor='#F34E4E'
                 onChange={(e) => handleChange(e)}
                 value={value}
+
             />
 
             <Text style={{ color: "#222" }}>{value}</Text>

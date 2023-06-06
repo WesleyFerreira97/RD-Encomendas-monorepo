@@ -1,19 +1,42 @@
 import React, { useState } from 'react';
-import { Text, View, FlatList } from 'react-native';
+import { Text, View, FlatList, TextInput } from 'react-native';
 import { styles } from './styles';
 import { citiesMinasGerais } from '../../data/cities';
 import { SearchInput } from '../../components/SearchInput';
 import { ListItem } from '../../components/ListItem';
 import { HomeHeader } from '../../components/HomeHeader';
+import { Button, Spinner } from 'tamagui';
+import { Controller, useForm } from 'react-hook-form';
 
 export function Home() {
-    // console.log(Object.values(ItemsFake));
-    console.log(ItemsFake);
+    const [cities, setCities] = useState("");
+    const { control } = useForm({
+        defaultValues: {
+
+        }
+    })
 
     return (
         <View style={styles.container}>
+            <Controller
+                control={control}
+                name="search"
+                render={({ field: { onChange, onBlur, value } }) => (
+                    <>
+                        <TextInput
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            value={value}
+                            placeholder="Enter your name"
+                        />
+                    </>
+                )}
+            />
             <HomeHeader />
-            <SearchInput />
+            <SearchInput
+            // placeholder="Digite o nome da cidade"
+            />
+
             <View style={styles.listWrap}>
                 <FlatList
                     style={{ width: '100%' }}
@@ -26,6 +49,9 @@ export function Home() {
                     )}
                 />
             </View>
+            <Button icon={<Spinner />}>
+                Submit
+            </Button>
         </View>
     );
 }
