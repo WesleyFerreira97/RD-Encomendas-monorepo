@@ -6,6 +6,7 @@ import { View } from 'react-native';
 type SearchInputProps = {
     onChangeText: (...event: any[]) => void;
     placeholder: string;
+    handleChange: any;
 }
 
 export function SearchInput({ ...rest }: SearchInputProps) {
@@ -23,7 +24,10 @@ export function SearchInput({ ...rest }: SearchInputProps) {
                 placeholderTextColor="#fff"
                 cursorColor="#F34E4E"
                 outlineColor='#F34E4E'
-                onChangeText={rest.onChangeText}
+                onChangeText={(e) => {
+                    rest.onChangeText(e),
+                        rest.handleChange(e)
+                }}
             />
         </View>
     );
