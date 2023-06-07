@@ -6,6 +6,9 @@ import { useFonts } from 'expo-font'
 import config from './tamagui.config'
 import { TamaguiProvider, Theme } from 'tamagui'
 import { Home } from './src/screens/Home';
+import { AppRoutes } from './src/routes';
+import { FormFreight } from './src/screens/FormFreight';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function App() {
   const colorScheme = useColorScheme()
@@ -21,11 +24,14 @@ export default function App() {
 
   return (
     <TamaguiProvider config={config}>
+      <StatusBar style="auto" backgroundColor='#0C134F' translucent={false} />
       <Theme name={colorScheme === 'dark' ? 'dark' : 'light'}>
-        <NavigationContainer>
-          <StatusBar style="auto" backgroundColor='#0C134F' />
-          <Home />
-        </NavigationContainer>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            {/* <Home /> */}
+            <AppRoutes />
+          </NavigationContainer>
+        </SafeAreaProvider>
       </Theme>
     </TamaguiProvider>
   );

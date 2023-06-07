@@ -8,10 +8,11 @@ type ItemDataProps = {
     itemData: {
         name: string;
         servicesIncluded: string;
-    }
+    },
+    onPressItem: () => void;
 }
 
-export function ListItem({ itemData }: ItemDataProps) {
+export function ListItem({ itemData, onPressItem }: ItemDataProps) {
     const { name, servicesIncluded } = itemData;
 
     const tagStyle = {
@@ -21,7 +22,10 @@ export function ListItem({ itemData }: ItemDataProps) {
     }
 
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity
+            style={styles.container}
+            onPress={onPressItem}
+        >
             <View style={styles.labelWrap}>
                 <MapPin size={30} />
                 <Text style={styles.label}>

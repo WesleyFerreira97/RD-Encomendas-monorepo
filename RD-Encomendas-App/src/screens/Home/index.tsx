@@ -6,6 +6,7 @@ import { ListItem } from '../../components/ListItem';
 import { HomeHeader } from '../../components/HomeHeader';
 import { Controller, useForm } from 'react-hook-form';
 import { citiesMinasGerais } from '../../data/cities';
+import { useNavigation } from '@react-navigation/native';
 
 type CitiesProps = {
     name: string;
@@ -20,6 +21,11 @@ type FormProps = {
 export function Home() {
     const [cities, setCities] = useState<CitiesProps[]>(citiesMinasGerais);
     const { control } = useForm<FormProps>();
+    const navigaiton = useNavigation();
+
+    const handleNavigationToForm = () => {
+        navigaiton.navigate('FormFreight');
+    }
 
     const handleSearchInput = (search: string) => {
 
@@ -62,6 +68,7 @@ export function Home() {
                     data={cities}
                     renderItem={({ item }) => (
                         <ListItem
+                            onPressItem={handleNavigationToForm}
                             itemData={item}
                         />
                     )}
