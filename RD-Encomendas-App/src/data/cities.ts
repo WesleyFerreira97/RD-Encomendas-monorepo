@@ -2,7 +2,7 @@ const citiesMinasGerais = [
     {
         name: "Belo Horizonte",
         servicesIncluded: "Coleta e Entrega",
-        serviceCharge: 90
+        serviceCharge: 120
     },
     {
         name: "Uberlândia",

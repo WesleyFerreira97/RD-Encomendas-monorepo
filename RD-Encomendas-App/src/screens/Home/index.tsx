@@ -7,24 +7,22 @@ import { HomeHeader } from '../../components/HomeHeader';
 import { Controller, useForm } from 'react-hook-form';
 import { citiesMinasGerais } from '../../data/cities';
 import { useNavigation } from '@react-navigation/native';
+import { CityProps } from '../../@types/cities';
 
-type CitiesProps = {
-    name: string;
-    servicesIncluded: string;
-    serviceCharge: number;
-}
 
 type FormProps = {
     search: string;
 }
 
 export function Home() {
-    const [cities, setCities] = useState<CitiesProps[]>(citiesMinasGerais);
+    const [cities, setCities] = useState<CityProps[]>(citiesMinasGerais);
     const { control } = useForm<FormProps>();
     const navigaiton = useNavigation();
 
-    const handleNavigationToForm = () => {
-        navigaiton.navigate('FormFreight');
+    const handleNavigationToForm = (city: CityProps) => {
+        navigaiton.navigate('FormFreight', {
+            city,
+        });
     }
 
     const handleSearchInput = (search: string) => {
@@ -67,10 +65,12 @@ export function Home() {
                     keyExtractor={(item, index) => index.toString()}
                     data={cities}
                     renderItem={({ item }) => (
-                        <ListItem
-                            onPressItem={handleNavigationToForm}
-                            itemData={item}
-                        />
+                        <>
+                            <ListItem
+                                onPressItem={handleNavigationToForm}
+                                itemData={item}
+                            />
+                        </>
                     )}
                 />
             </View>

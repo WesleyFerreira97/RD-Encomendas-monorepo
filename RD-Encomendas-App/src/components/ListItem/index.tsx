@@ -3,13 +3,11 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
 import { MapPin } from 'phosphor-react-native';
 import { Button } from 'tamagui';
+import { CityProps } from '../../@types/cities';
 
 type ItemDataProps = {
-    itemData: {
-        name: string;
-        servicesIncluded: string;
-    },
-    onPressItem: () => void;
+    itemData: CityProps;
+    onPressItem: (city: CityProps) => void;
 }
 
 export function ListItem({ itemData, onPressItem }: ItemDataProps) {
@@ -24,7 +22,7 @@ export function ListItem({ itemData, onPressItem }: ItemDataProps) {
     return (
         <TouchableOpacity
             style={styles.container}
-            onPress={onPressItem}
+            onPress={() => onPressItem(itemData)}
         >
             <View style={styles.labelWrap}>
                 <MapPin size={30} />
