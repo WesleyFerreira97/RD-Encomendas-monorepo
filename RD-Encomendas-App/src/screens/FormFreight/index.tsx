@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { CityProps } from '../../@types/cities';
 import { RouteProp } from '@react-navigation/native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Adapt, Select, SelectProps, Sheet } from 'tamagui';
+import { Adapt, Button, Select, SelectProps, Sheet } from 'tamagui';
 import { citiesMinasGerais } from '../../data/cities';
-import { Check } from 'phosphor-react-native';
+import { Buildings, Check, ArrowsLeftRight } from 'phosphor-react-native';
+import { themeColors } from '../../style/theme';
 
 type RoutParamsProps = {
     city: CityProps
@@ -17,8 +18,9 @@ const SelectCity = (props: SelectProps) => {
 
     return (
         <Select id="currentCity" value={selectedCity} onValueChange={setSelectedCity}>
-            <Select.Trigger width={180} >
-                <Select.Value placeholder="Something" />
+            <Select.Trigger style={styles.triggerButton} width={"auto"}>
+                <ArrowsLeftRight color={themeColors.primaryAlt} size={40} />
+                <Text style={styles.triggerLabel}>Alterar Cidade</Text>
             </Select.Trigger>
 
             <Adapt when="sm" platform="touch">
@@ -31,7 +33,6 @@ const SelectCity = (props: SelectProps) => {
                     <Sheet.Overlay />
                 </Sheet>
             </Adapt>
-
             <Select.Content zIndex={99}>
                 <Select.Viewport>
                     {citiesMinasGerais.map((city, i) => (
@@ -56,10 +57,15 @@ export function FormFreight() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.pageTitle}>{city.name}</Text>
-            <Text style={styles.pageInfo}>Tarifa : {city.serviceCharge}</Text>
-            <Text style={styles.pageInfo}>{city.servicesIncluded}</Text>
-            <SelectCity native />
+            <View style={styles.headerSelectCity}>
+                <Buildings size={100} color={themeColors.primaryAlt} />
+                <Text style={styles.pageTitle}>{city.name}</Text>
+                <Text style={styles.pageInfo}>Tarifa : {city.serviceCharge}</Text>
+                <Text style={styles.pageInfo}>{city.servicesIncluded}</Text>
+                <SelectCity native />
+            </View>
+            <View style={styles.formContainer}>
+            </View>
         </View>
     );
 }
