@@ -1,24 +1,35 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { CityProps } from '../../@types/cities';
 import { RouteProp } from '@react-navigation/native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Adapt, Button, Select, SelectProps, Sheet } from 'tamagui';
 import { citiesMinasGerais } from '../../data/cities';
-import { Check } from 'phosphor-react-native';
+import { Buildings, Check, ArrowsLeftRight } from 'phosphor-react-native';
+import { themeColors } from '../../style/theme';
+import { useCity } from '../../hooks/useCity';
+import { Controller, useForm } from 'react-hook-form';
 
 type RoutParamsProps = {
-    cityName: Pick<CityProps, 'name'>;
+    cityName: string;
 }
 
-const SelectCity = (props: SelectProps) => {
-    const [selectedCity, setSelectedCity] = useState<string>("");
+type SelectCityProps = {
+    onSelectCity: (city: string) => void;
+} & SelectProps;
+
+const SelectCity = (props: SelectCityProps) => {
 
     return (
-        <Select id="currentCity" value={selectedCity} onValueChange={setSelectedCity}>
-            <Select.Trigger width={90} backgroundColor="#3606b8" style={{ width: 500 }}>
-                <Text>Alterar Cidade </Text>
+        <Select
+            id="currentCity"
+            value={props.value}
+            onValueChange={(e) => props.onSelectCity(e)}
+        >
+            <Select.Trigger style={styles.triggerButton} width={"auto"}>
+                <ArrowsLeftRight color={themeColors.primaryAlt} size={40} />
+                <Text style={styles.triggerLabel}>Alterar Cidade</Text>
             </Select.Trigger>
 
             <Adapt when="sm" platform="touch">
@@ -31,7 +42,6 @@ const SelectCity = (props: SelectProps) => {
                     <Sheet.Overlay />
                 </Sheet>
             </Adapt>
-
             <Select.Content zIndex={99}>
                 <Select.Viewport>
                     {citiesMinasGerais.map((city, i) => (
@@ -53,13 +63,43 @@ const SelectCity = (props: SelectProps) => {
 export function FormFreight() {
     const route = useRoute();
     const { cityName } = route.params as RoutParamsProps;
+    const { currentCity, setSelectedCity } = useCity({ cityName: cityName });
+    const { control } = useForm();
 
+    const [formData, setFormData] = useState<any>({
+        city: cityName,
+        servicesIncluded: "",
+        serviceCharge: 0,
+        weight: 0,
+        notePrice: 0,
+    });
+
+    const handleChangeCity = (city: string) => {
+        console.log('Handle select city : ', city);
+
+        setSelectedCity(city);
+    }
     return (
         <View style={styles.container}>
-            {/* <Text style={styles.pageTitle}>{cityName.name}</Text>
-            <Text style={styles.pageInfo}>Tarifa : {cityName.serviceCharge}</Text>
-            <Text style={styles.pageInfo}>{cityName.servicesIncluded}</Text> */}
-            <SelectCity native />
+            <View style={styles.headerSelectCity}>
+                <Buildings size={100} color={themeColors.primaryAlt} />
+                <Text style={styles.pageTitle}>{currentCity.name}</Text>
+                <Text style={styles.pageInfo}>Tarifa : {currentCity.serviceCharge}</Text>
+                <Text style={styles.pageInfo}>{currentCity.servicesIncluded}</Text>
+                <Controller
+                    control={control}
+                    name='selectCity'
+                    render={({ field: { onChange } }) => (
+                        <SelectCity
+                            native
+                            value={currentCity.name}
+                            onSelectCity={handleChangeCity}
+                        />
+                    )}
+                />
+            </View>
+            <View style={styles.formContainer}>
+            </View>
         </View>
     );
 }
