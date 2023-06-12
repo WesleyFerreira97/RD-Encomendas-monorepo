@@ -4,12 +4,12 @@ import { styles } from './styles';
 import { CityProps } from '../../@types/cities';
 import { RouteProp } from '@react-navigation/native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Adapt, Select, SelectProps, Sheet } from 'tamagui';
+import { Adapt, Button, Select, SelectProps, Sheet } from 'tamagui';
 import { citiesMinasGerais } from '../../data/cities';
 import { Check } from 'phosphor-react-native';
 
 type RoutParamsProps = {
-    city: CityProps
+    cityName: Pick<CityProps, 'name'>;
 }
 
 const SelectCity = (props: SelectProps) => {
@@ -17,8 +17,8 @@ const SelectCity = (props: SelectProps) => {
 
     return (
         <Select id="currentCity" value={selectedCity} onValueChange={setSelectedCity}>
-            <Select.Trigger width={180} >
-                <Select.Value placeholder="Something" />
+            <Select.Trigger width={90} backgroundColor="#3606b8" style={{ width: 500 }}>
+                <Text>Alterar Cidade </Text>
             </Select.Trigger>
 
             <Adapt when="sm" platform="touch">
@@ -40,7 +40,7 @@ const SelectCity = (props: SelectProps) => {
                                 {city.name}
                             </Select.ItemText>
                             <Select.ItemIndicator marginLeft="auto">
-                                <Check size={16} />
+                                <Check size={24} />
                             </Select.ItemIndicator>
                         </Select.Item>
                     ))}
@@ -52,13 +52,13 @@ const SelectCity = (props: SelectProps) => {
 
 export function FormFreight() {
     const route = useRoute();
-    const { city } = route.params as RoutParamsProps;
+    const { cityName } = route.params as RoutParamsProps;
 
     return (
         <View style={styles.container}>
-            <Text style={styles.pageTitle}>{city.name}</Text>
-            <Text style={styles.pageInfo}>Tarifa : {city.serviceCharge}</Text>
-            <Text style={styles.pageInfo}>{city.servicesIncluded}</Text>
+            {/* <Text style={styles.pageTitle}>{cityName.name}</Text>
+            <Text style={styles.pageInfo}>Tarifa : {cityName.serviceCharge}</Text>
+            <Text style={styles.pageInfo}>{cityName.servicesIncluded}</Text> */}
             <SelectCity native />
         </View>
     );

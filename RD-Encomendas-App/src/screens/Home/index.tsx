@@ -21,7 +21,7 @@ export function Home() {
 
     const handleNavigationToForm = (city: CityProps) => {
         navigaiton.navigate('FormFreight', {
-            city,
+            cityName: city.name,
         });
     }
 

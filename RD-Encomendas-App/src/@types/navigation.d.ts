@@ -4,7 +4,7 @@ export declare global {
     namespace ReactNavigation {
         interface RootParamList {
             Home: undefined;
-            FormFreight: { city: CityProps };
+            FormFreight: { cityName: Pick<CityProps, 'name'> };
         }
     }
 }
