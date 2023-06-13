@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { CityProps } from '../../@types/cities';
@@ -60,25 +60,31 @@ const SelectCity = (props: SelectCityProps) => {
     )
 }
 
+type FormDataProps = CityProps & {
+    weight: number;
+    notePrice: number;
+}
+
 export function FormFreight() {
     const route = useRoute();
     const { cityName } = route.params as RoutParamsProps;
+    const { control, handleSubmit, } = useForm();
     const { currentCity, setSelectedCity } = useCity({ cityName: cityName });
-    const { control } = useForm();
 
-    const [formData, setFormData] = useState<any>({
-        city: cityName,
-        servicesIncluded: "",
+    const [formData, setFormData] = useState<FormDataProps>({
+        name: "",
         serviceCharge: 0,
+        servicesIncluded: "",
         weight: 0,
         notePrice: 0,
     });
 
     const handleChangeCity = (city: string) => {
-        console.log('Handle select city : ', city);
-
+        setFormData((prevState) => ({ ...prevState, city }))
         setSelectedCity(city);
     }
+    console.log(control);
+
     return (
         <View style={styles.container}>
             <View style={styles.headerSelectCity}>
@@ -99,6 +105,12 @@ export function FormFreight() {
                 />
             </View>
             <View style={styles.formContainer}>
+
+                <Button
+                    onPress={handleSubmit((data) => console.log(data))}
+                >
+                    Submit
+                </Button>
             </View>
         </View>
     );
