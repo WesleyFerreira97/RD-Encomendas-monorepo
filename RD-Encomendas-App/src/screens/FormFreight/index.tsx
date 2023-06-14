@@ -14,7 +14,8 @@ type RoutParamsProps = {
     cityName: string;
 }
 
-type FormDataProps = CityProps & {
+type FormDataProps = {
+    selectedCity: CityProps;
     weight: number;
     notePrice: number;
 }
@@ -22,39 +23,48 @@ type FormDataProps = CityProps & {
 export function FormFreight() {
     const route = useRoute();
     const { cityName } = route.params as RoutParamsProps;
-    const { control, handleSubmit, formState, watch, setValue, } = useForm();
+    const { currentCity, setSelectedCity } = useCity({ cityName: cityName });
+    const { control, handleSubmit, formState, watch, setValue, } = useForm<FormDataProps>({
+        mode: 'onChange',
+        defaultValues: {
+            selectedCity: currentCity,
+        }
+    });
 
-    const { selectedCity } = watch();
+    const pqp = watch("selectedCity");
+
     return (
         <View style={styles.container}>
+            {console.log(formState, " - selected city on Screen Form Freight")}
             <View style={styles.headerSelectCity}>
-                <Buildings size={100} color={themeColors.primaryAlt} />
-                <Text style={styles.pageTitle}>
-                    {selectedCity.name}
-                </Text>
-                <Text style={styles.pageTitle}>
-                    {selectedCity.name}
-                </Text>
-                <Text style={styles.pageInfo}>
-                    Tarifa : {currentCity.serviceCharge}
-                </Text>
-                <Text style={styles.pageInfo}>
-                    {currentCity.servicesIncluded}
-                </Text>
+                <View>
+                    <Buildings size={100} color={themeColors.primaryAlt} />
+                    {/* <Text style={styles.pageTitle}>
+                        {selectedCity.name}
+                    </Text>
+                    <Text style={styles.pageTitle}>
+                        {selectedCity.name}
+                    </Text>
+                    <Text style={styles.pageInfo}>
+                        Tarifa : {currentCity.serviceCharge}
+                    </Text>
+                    <Text style={styles.pageInfo}>
+                        {currentCity.servicesIncluded}
+                    </Text> */}
+                </View>
 
                 <SelectCity
                     native
-                    name='selectedCity'
-                    value={cityName}
                     control={control}
-                    onSelectCity={handleChangeCity}
+                    name='selectedCity'
+                    defaultValue={cityName}
                 />
 
             </View>
             <View style={styles.formContainer}>
 
                 <Button
-                    onPress={handleSubmit((data) => console.log(data))}
+                    onPress={handleSubmit((data) => setSelectedCity("Betim"))}
                 >
                     Submit
                 </Button>
@@ -62,7 +72,3 @@ export function FormFreight() {
         </View>
     );
 }
-
-
-// 1º Problema - O header da pagina está consumindo o valor do current city e não atualiza após o input do usuário
-// 2º Problema - 
