@@ -21,6 +21,8 @@ export const SelectCity = ({ control, name, defaultValue }: SelectCityProps) => 
 
     const handleOnSelect = (value: string) => {
         setSelectedCity(value);
+        console.log("");
+        console.log(currentCity, " : Handle on Select ");
 
         field.onChange(currentCity);
     }

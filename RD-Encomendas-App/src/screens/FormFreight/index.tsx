@@ -24,6 +24,7 @@ export function FormFreight() {
     const route = useRoute();
     const { cityName } = route.params as RoutParamsProps;
     const { currentCity, setSelectedCity } = useCity({ cityName: cityName });
+
     const { control, handleSubmit, formState } = useForm<FormDataProps>({
         mode: 'onChange',
         defaultValues: {
@@ -31,6 +32,11 @@ export function FormFreight() {
         }
     });
 
+    console.log(formState, " : Form State");
+    const handleSubmitFreight = (data: FormDataProps) => {
+        console.log(data, " : Data");
+
+    }
     return (
         <View style={styles.container}>
             <View style={styles.headerSelectCity}>
@@ -61,8 +67,9 @@ export function FormFreight() {
             <View style={styles.formContainer}>
 
                 <Button
-                    onPress={handleSubmit((data) => setSelectedCity("Betim"))}
-                >
+                    onPress={handleSubmit((data) =>
+                        handleSubmitFreight(data))
+                    }>
                     Submit
                 </Button>
             </View>
