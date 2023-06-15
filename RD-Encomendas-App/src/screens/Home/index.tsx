@@ -9,7 +9,6 @@ import { citiesMinasGerais } from '../../data/cities';
 import { useNavigation } from '@react-navigation/native';
 import { CityProps } from '../../@types/cities';
 
-
 type FormProps = {
     search: string;
 }

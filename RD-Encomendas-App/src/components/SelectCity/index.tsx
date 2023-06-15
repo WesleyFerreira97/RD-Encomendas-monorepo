@@ -18,7 +18,6 @@ type SelectCityProps = {
 export const SelectCity = ({ control, name, defaultValue }: SelectCityProps) => {
     const { currentCity, setSelectedCity } = useCity({ cityName: defaultValue });
     const { field } = useController({ control, name, defaultValue });
-    console.log(name);
 
     const handleOnSelect = (value: string) => {
         setSelectedCity(value);

@@ -24,18 +24,15 @@ export function FormFreight() {
     const route = useRoute();
     const { cityName } = route.params as RoutParamsProps;
     const { currentCity, setSelectedCity } = useCity({ cityName: cityName });
-    const { control, handleSubmit, formState, watch, setValue, } = useForm<FormDataProps>({
+    const { control, handleSubmit, formState } = useForm<FormDataProps>({
         mode: 'onChange',
         defaultValues: {
             selectedCity: currentCity,
         }
     });
 
-    const pqp = watch("selectedCity");
-
     return (
         <View style={styles.container}>
-            {console.log(formState, " - selected city on Screen Form Freight")}
             <View style={styles.headerSelectCity}>
                 <View>
                     <Buildings size={100} color={themeColors.primaryAlt} />

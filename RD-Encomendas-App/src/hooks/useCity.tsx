@@ -8,15 +8,18 @@ type UseCityProps = {
 
 export function useCity({ cityName }: UseCityProps) {
     const [selectedCity, setSelectedCity] = useState<string>(cityName);
-    const [currentCity, setCurrentCity] = useState<CityProps>(citiesMinasGerais[0]);
 
-    useEffect(() => {
-        const filtredCityByName = citiesMinasGerais.filter(city => {
-            return city.name === selectedCity;
+    const filterCityByName = (name: string): CityProps => {
+        const filtredCity = citiesMinasGerais.find(city => {
+            return city.name === name;
         });
 
-        setCurrentCity(filtredCityByName[0]);
-    }, [selectedCity])
+        if (filtredCity === undefined) return "Esta cidade não está disponível";
+
+        return filtredCity;
+    }
+
+    const currentCity: CityProps = filterCityByName(selectedCity)
 
     return { currentCity, setSelectedCity }
 }
