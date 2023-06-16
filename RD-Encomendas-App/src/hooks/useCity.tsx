@@ -9,17 +9,24 @@ type UseCityProps = {
 export function useCity({ cityName }: UseCityProps) {
     const [selectedCity, setSelectedCity] = useState<string>(cityName);
 
+
     const filterCityByName = (name: string): CityProps => {
         const filtredCity = citiesMinasGerais.find(city => {
             return city.name === name;
         });
-
-        if (filtredCity === undefined) return "Esta cidade não está disponível";
+        if (filtredCity === undefined) return "This city is not available";
 
         return filtredCity;
     }
 
-    const currentCity: CityProps = filterCityByName(selectedCity)
+    // Fazer uma query para buscar a cidade no banco de dados
+    const handleNewCity = (cityName: string) => {
+        const newCity = filterCityByName(cityName);
 
-    return { currentCity, setSelectedCity }
+        setSelectedCity(newCity);
+    }
+
+    let currentCity: CityProps = filterCityByName(selectedCity)
+
+    return { currentCity, setSelectedCity: handleNewCity }
 }

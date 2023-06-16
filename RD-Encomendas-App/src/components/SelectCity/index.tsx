@@ -9,6 +9,7 @@ import { Sheet } from "tamagui";
 import { citiesMinasGerais } from "../../data/cities";
 import { Controller, ControllerProps, useController } from "react-hook-form";
 import { useCity } from "../../hooks/useCity";
+import { CityProps } from "../../@types/cities";
 
 type SelectCityProps = {
     name: string;
@@ -16,15 +17,32 @@ type SelectCityProps = {
 } & SelectProps & Partial<ControllerProps | any>;
 
 export const SelectCity = ({ control, name, defaultValue }: SelectCityProps) => {
-    const { currentCity, setSelectedCity } = useCity({ cityName: defaultValue });
+    // const { currentCity, setSelectedCity } = useCity({ cityName: defaultValue });
     const { field } = useController({ name, control, defaultValue, });
-
+    field.value = defaultValue;
     const handleOnSelect = (value: string) => {
-        setSelectedCity(value);
+        // setSelectedCity(value);
         console.log("");
+    }
 
-        field.onChange(currentCity);
-        console.log("🚀 ~ file: index.tsx:27 ~ handleOnSelect ~ field:", field)
+    const tryAgain = (value: string) => {
+        // console.log(value, " : value tryAgain");
+
+        const filterCityByName = (name: string): CityProps => {
+            const filtredCity = citiesMinasGerais.find(city => {
+                return city.name === name;
+            });
+            if (filtredCity === undefined) return "This city is not available";
+
+            return filtredCity;
+        }
+
+        const ex1 = filterCityByName(value);
+
+        // console.log(ex1, " : ex1");
+
+        field.onChange(ex1);
+        field.value = ex1;
     }
 
     return (
@@ -33,11 +51,15 @@ export const SelectCity = ({ control, name, defaultValue }: SelectCityProps) => 
                 id="currentCity"
                 name={field.name}
                 value={field.value}
-                onValueChange={(value) => handleOnSelect(value)}
+                onValueChange={(value) => tryAgain(value)}
+                defaultValue={defaultValue}
             >
                 <Select.Trigger style={styles.triggerButton} width={"auto"}>
                     <ArrowsLeftRight color={themeColors.primaryAlt} size={40} />
-                    <Text style={styles.triggerLabel}>Alterar Cidade</Text>
+                    <Text style={styles.triggerLabel}>
+                        Alterar Cidade &nbsp;
+                        {field.value.name}
+                    </Text>
                 </Select.Trigger>
 
                 <Adapt when="sm" platform="touch">

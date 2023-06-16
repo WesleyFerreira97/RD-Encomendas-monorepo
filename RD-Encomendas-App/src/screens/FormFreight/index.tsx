@@ -23,32 +23,29 @@ type FormDataProps = {
 export function FormFreight() {
     const route = useRoute();
     const { cityName } = route.params as RoutParamsProps;
-    const { currentCity, setSelectedCity } = useCity({ cityName: cityName });
-    const { control, handleSubmit, } = useForm<FormDataProps>({
-        mode: 'onChange',
+    const { currentCity } = useCity({ cityName: cityName });
+    const { control, handleSubmit, watch } = useForm<FormDataProps>({
         defaultValues: {
             selectedCity: currentCity,
         }
     });
 
-
-    console.log("");
-    console.log("");
-    console.log("");
-    console.log("");
+    const { selectedCity } = watch();
 
     const handleSubmitFreight = (data: FormDataProps) => {
         console.log(data, " : Data");
-
     }
+
+    console.log(watchCity, " - Watch City");
+
     return (
         <View style={styles.container}>
             <View style={styles.headerSelectCity}>
                 <View>
                     <Buildings size={100} color={themeColors.primaryAlt} />
-                    {/* <Text style={styles.pageTitle}>
+                    <Text style={styles.pageTitle}>
                         {selectedCity.name}
-                    </Text> */}
+                    </Text>
                     {/* <Text style={styles.pageTitle}>
                         {selectedCity.name}
                     </Text>
@@ -75,6 +72,12 @@ export function FormFreight() {
                         handleSubmitFreight(data))
                     }>
                     Submit
+                </Button>
+                <Button
+                    onPress={handleSubmit((data) =>
+                        console.log(formState, " : Data"))
+                    }>
+                    Handle Check Caurrent City
                 </Button>
             </View>
         </View>
