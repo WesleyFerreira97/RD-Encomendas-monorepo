@@ -17,22 +17,23 @@ type SelectCityProps = {
 
 export const SelectCity = ({ control, name, defaultValue }: SelectCityProps) => {
     const { currentCity, setSelectedCity } = useCity({ cityName: defaultValue });
-    const { field } = useController({ control, name, defaultValue });
+    const { field } = useController({ name, control, defaultValue, });
 
     const handleOnSelect = (value: string) => {
         setSelectedCity(value);
         console.log("");
-        console.log(currentCity, " : Handle on Select ");
 
         field.onChange(currentCity);
+        console.log("🚀 ~ file: index.tsx:27 ~ handleOnSelect ~ field:", field)
     }
 
     return (
         <>
             <Select
                 id="currentCity"
+                name={field.name}
                 value={field.value}
-                onValueChange={handleOnSelect}
+                onValueChange={(value) => handleOnSelect(value)}
             >
                 <Select.Trigger style={styles.triggerButton} width={"auto"}>
                     <ArrowsLeftRight color={themeColors.primaryAlt} size={40} />

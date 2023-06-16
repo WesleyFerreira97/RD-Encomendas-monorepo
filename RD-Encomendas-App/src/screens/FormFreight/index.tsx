@@ -24,15 +24,19 @@ export function FormFreight() {
     const route = useRoute();
     const { cityName } = route.params as RoutParamsProps;
     const { currentCity, setSelectedCity } = useCity({ cityName: cityName });
-
-    const { control, handleSubmit, formState } = useForm<FormDataProps>({
+    const { control, handleSubmit, } = useForm<FormDataProps>({
         mode: 'onChange',
         defaultValues: {
             selectedCity: currentCity,
         }
     });
 
-    console.log(formState, " : Form State");
+
+    console.log("");
+    console.log("");
+    console.log("");
+    console.log("");
+
     const handleSubmitFreight = (data: FormDataProps) => {
         console.log(data, " : Data");
 
@@ -44,8 +48,8 @@ export function FormFreight() {
                     <Buildings size={100} color={themeColors.primaryAlt} />
                     {/* <Text style={styles.pageTitle}>
                         {selectedCity.name}
-                    </Text>
-                    <Text style={styles.pageTitle}>
+                    </Text> */}
+                    {/* <Text style={styles.pageTitle}>
                         {selectedCity.name}
                     </Text>
                     <Text style={styles.pageInfo}>
