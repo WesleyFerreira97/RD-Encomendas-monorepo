@@ -3,18 +3,19 @@ import { View, Text } from 'react-native';
 import { styles } from './styles';
 import { CityProps } from '../../@types/cities';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Button } from 'tamagui';
+import { Button, Input } from 'tamagui';
 import { Buildings } from 'phosphor-react-native';
 import { themeColors } from '../../style/theme';
 import { useCity } from '../../hooks/useCity';
 import { Controller, useForm, useFormState } from 'react-hook-form';
 import { SelectCity } from '../../components/SelectCity';
+import { InputNumber } from '../../components/InputNumber';
 
 type RoutParamsProps = {
     cityName: string;
 }
 
-type FormDataProps = {
+export type FormDataProps = {
     selectedCity: CityProps;
     weight: number;
     notePrice: number;
@@ -24,9 +25,11 @@ export function FormFreight() {
     const route = useRoute();
     const { cityName } = route.params as RoutParamsProps;
     const { currentCity } = useCity({ cityName: cityName });
-    const { control, handleSubmit, watch } = useForm<FormDataProps>({
+    const { control, handleSubmit, watch, formState } = useForm<FormDataProps>({
         defaultValues: {
             selectedCity: currentCity,
+            weight: 0,
+            notePrice: 0,
         }
     });
 
@@ -60,19 +63,27 @@ export function FormFreight() {
                 style={styles.selectCityWrap}
             />
             <View style={styles.formContainer}>
-
-                {/* <Button
+                <InputNumber
+                    name='weight'
+                    control={control}
+                    placeholder='Peso em KG'
+                    label='Insira o peso total da mercadoria'
+                    inputSufix='KG'
+                />
+                <InputNumber
+                    name='notePrice'
+                    control={control}
+                    placeholder='Valor da Nota Fiscal'
+                    label="Insira o valor da nota fiscal"
+                    inputSufix={<Buildings size={20} color={themeColors.primaryAlt} />}
+                />
+                <Button
+                    style={styles.buttonSubmit}
                     onPress={handleSubmit((data) =>
                         handleSubmitFreight(data))
                     }>
-                    Submit
+                    Calcular Frete
                 </Button>
-                <Button
-                    onPress={handleSubmit((data) =>
-                        console.log(formState, " : Data"))
-                    }>
-                    Handle Check Caurrent City
-                </Button> */}
             </View>
         </View>
     );

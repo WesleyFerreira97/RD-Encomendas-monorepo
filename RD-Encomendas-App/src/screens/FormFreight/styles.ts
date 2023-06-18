@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     headerSelectCity: {
-        height: "45%",
+        height: "40%",
         width: "100%",
         backgroundColor: themeColors.primary,
         alignItems: 'center',
@@ -15,9 +15,9 @@ export const styles = StyleSheet.create({
     },
     pageTitle: {
         color: "#fff",
-        fontSize: 40,
+        fontSize: 38,
         fontWeight: "bold",
-        paddingBottom: 30,
+        paddingBottom: 20,
         textAlign: "center",
     },
     pageInfo: {
@@ -34,5 +34,11 @@ export const styles = StyleSheet.create({
     formContainer: {
         flex: 1,
         backgroundColor: themeColors.primaryAlt,
+        paddingHorizontal: 20,
+        paddingTop: 20,
+        alignItems: "center",
     },
+    buttonSubmit: {
+        marginTop: 40,
+    }
 })

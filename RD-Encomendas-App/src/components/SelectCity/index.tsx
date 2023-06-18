@@ -57,8 +57,7 @@ export const SelectCity = ({ control, name, defaultValue, ...props }: SelectCity
                         size={40}
                     />
                     <Text style={styles.triggerLabel}>
-                        Alterar Cidade &nbsp;
-                        {field.value.name}
+                        Alterar Cidade
                     </Text>
                 </Select.Trigger>
 
