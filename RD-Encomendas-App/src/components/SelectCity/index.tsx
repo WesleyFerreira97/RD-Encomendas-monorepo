@@ -1,6 +1,6 @@
 import { SelectProps } from "tamagui";
 import { Select } from "tamagui";
-import { Text } from 'react-native';
+import { View, Text, ViewStyle } from 'react-native';
 import { ArrowsLeftRight, Check } from "phosphor-react-native";
 import { styles } from "./styles";
 import { themeColors } from "../../style/theme";
@@ -14,21 +14,17 @@ import { CityProps } from "../../@types/cities";
 type SelectCityProps = {
     name: string;
     defaultValue: string;
+    style?: ViewStyle
 } & SelectProps & Partial<ControllerProps | any>;
 
-export const SelectCity = ({ control, name, defaultValue }: SelectCityProps) => {
-    // const { currentCity, setSelectedCity } = useCity({ cityName: defaultValue });
+export const SelectCity = ({ control, name, defaultValue, ...props }: SelectCityProps) => {
     const { field } = useController({ name, control, defaultValue, });
     field.value = defaultValue;
-    const handleOnSelect = (value: string) => {
-        // setSelectedCity(value);
-        console.log("");
-    }
 
-    const tryAgain = (value: string) => {
+    const handleOnSelect = (value: string) => {
         // console.log(value, " : value tryAgain");
 
-        const filterCityByName = (name: string): CityProps => {
+        const filterCityByName = (name: string): CityProps | string => {
             const filtredCity = citiesMinasGerais.find(city => {
                 return city.name === name;
             });
@@ -37,25 +33,29 @@ export const SelectCity = ({ control, name, defaultValue }: SelectCityProps) => 
             return filtredCity;
         }
 
-        const ex1 = filterCityByName(value);
+        const filtredCity = filterCityByName(value);
 
-        // console.log(ex1, " : ex1");
-
-        field.onChange(ex1);
-        field.value = ex1;
+        field.onChange(filtredCity);
     }
 
     return (
-        <>
+        <View {...props.style}>
             <Select
                 id="currentCity"
                 name={field.name}
                 value={field.value}
-                onValueChange={(value) => tryAgain(value)}
+                onValueChange={(value) => handleOnSelect(value)}
                 defaultValue={defaultValue}
             >
-                <Select.Trigger style={styles.triggerButton} width={"auto"}>
-                    <ArrowsLeftRight color={themeColors.primaryAlt} size={40} />
+                <Select.Trigger
+                    style={styles.triggerButton}
+                    width={"auto"}
+                    pressStyle={{ transform: [{ scale: .90 }] }}
+                >
+                    <ArrowsLeftRight
+                        color={themeColors.primaryAlt}
+                        size={40}
+                    />
                     <Text style={styles.triggerLabel}>
                         Alterar Cidade &nbsp;
                         {field.value.name}
@@ -88,6 +88,6 @@ export const SelectCity = ({ control, name, defaultValue }: SelectCityProps) => 
                     </Select.Viewport>
                 </Select.Content>
             </Select>
-        </>
+        </View>
     )
 }

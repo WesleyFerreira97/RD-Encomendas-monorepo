@@ -30,44 +30,38 @@ export function FormFreight() {
         }
     });
 
-    const { selectedCity } = watch();
+    const city = watch("selectedCity");
 
     const handleSubmitFreight = (data: FormDataProps) => {
         console.log(data, " : Data");
     }
 
-    console.log(watchCity, " - Watch City");
-
     return (
         <View style={styles.container}>
             <View style={styles.headerSelectCity}>
-                <View>
-                    <Buildings size={100} color={themeColors.primaryAlt} />
-                    <Text style={styles.pageTitle}>
-                        {selectedCity.name}
-                    </Text>
-                    {/* <Text style={styles.pageTitle}>
-                        {selectedCity.name}
-                    </Text>
-                    <Text style={styles.pageInfo}>
-                        Tarifa : {currentCity.serviceCharge}
-                    </Text>
-                    <Text style={styles.pageInfo}>
-                        {currentCity.servicesIncluded}
-                    </Text> */}
-                </View>
+                <Buildings size={100} color={themeColors.primaryAlt} />
+                <Text style={styles.pageTitle}>
+                    {city.name}
+                </Text>
+                <Text style={styles.pageInfo}>
+                    Tarifa : {city.serviceCharge}
+                </Text>
+                <Text style={styles.pageInfo}>
+                    {city.servicesIncluded}
+                </Text>
 
-                <SelectCity
-                    native
-                    control={control}
-                    name='selectedCity'
-                    defaultValue={cityName}
-                />
 
             </View>
+            <SelectCity
+                native
+                control={control}
+                name='selectedCity'
+                defaultValue={cityName}
+                style={styles.selectCityWrap}
+            />
             <View style={styles.formContainer}>
 
-                <Button
+                {/* <Button
                     onPress={handleSubmit((data) =>
                         handleSubmitFreight(data))
                     }>
@@ -78,7 +72,7 @@ export function FormFreight() {
                         console.log(formState, " : Data"))
                     }>
                     Handle Check Caurrent City
-                </Button>
+                </Button> */}
             </View>
         </View>
     );

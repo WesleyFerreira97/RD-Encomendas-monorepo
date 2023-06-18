@@ -6,10 +6,10 @@ export const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         borderWidth: 0,
         padding: 0,
-        position: "absolute",
-        bottom: 10,
         outlineStyle: "none",
         justifyContent: "center",
+        width: "100%",
+        zIndex: 9999,
     },
     triggerLabel: {
         color: themeColors.primaryAlt,

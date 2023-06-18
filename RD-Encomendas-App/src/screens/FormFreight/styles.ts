@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     headerSelectCity: {
-        height: "50%",
+        height: "45%",
         width: "100%",
         backgroundColor: themeColors.primary,
         alignItems: 'center',
@@ -17,26 +17,22 @@ export const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 40,
         fontWeight: "bold",
-        paddingBottom: 30
+        paddingBottom: 30,
+        textAlign: "center",
     },
     pageInfo: {
         color: "#fff",
-        fontSize: 20,
+        fontSize: 15,
+    },
+    selectCityWrap: {
+        width: "100%",
+        // height: "100%",
+        backgroundColor: themeColors.primary,
+        zIndex: 10,
+        position: "relative",
     },
     formContainer: {
         flex: 1,
         backgroundColor: themeColors.primaryAlt,
     },
-    triggerButton: {
-        backgroundColor: 'transparent',
-        borderWidth: 0,
-        padding: 0,
-        position: "absolute",
-        bottom: 10,
-        outlineStyle: "none",
-        justifyContent: "center",
-    },
-    triggerLabel: {
-        color: themeColors.primaryAlt,
-    }
 })
