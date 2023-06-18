@@ -36,8 +36,6 @@ export function FormFreight() {
         console.log(data, " : Data");
     }
 
-    console.log(watchCity, " - Watch City");
-
     return (
         <View style={styles.container}>
             <View style={styles.headerSelectCity}>
@@ -74,9 +72,7 @@ export function FormFreight() {
                     Submit
                 </Button>
                 <Button
-                    onPress={handleSubmit((data) =>
-                        console.log(formState, " : Data"))
-                    }>
+                    onPress={() => console.log(selectedCity)}>
                     Handle Check Caurrent City
                 </Button>
             </View>

@@ -9,7 +9,6 @@ type UseCityProps = {
 export function useCity({ cityName }: UseCityProps) {
     const [selectedCity, setSelectedCity] = useState<string>(cityName);
 
-
     const filterCityByName = (name: string): CityProps => {
         const filtredCity = citiesMinasGerais.find(city => {
             return city.name === name;
