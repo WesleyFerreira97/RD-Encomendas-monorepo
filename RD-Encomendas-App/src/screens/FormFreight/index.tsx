@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { CityProps } from '../../@types/cities';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -25,6 +25,7 @@ export function FormFreight() {
     const route = useRoute();
     const { cityName } = route.params as RoutParamsProps;
     const { currentCity } = useCity({ cityName: cityName });
+    const [totalFreight, setTotalFreight] = useState(0);
     const { control, handleSubmit, watch, formState } = useForm<FormDataProps>({
         defaultValues: {
             selectedCity: currentCity,
@@ -52,9 +53,8 @@ export function FormFreight() {
                 <Text style={styles.pageInfo}>
                     {city.servicesIncluded}
                 </Text>
-
-
             </View>
+
             <SelectCity
                 native
                 control={control}
@@ -77,13 +77,20 @@ export function FormFreight() {
                     label="Insira o valor da nota fiscal"
                     inputSufix={<Buildings size={20} color={themeColors.primaryAlt} />}
                 />
-                <Button
-                    style={styles.buttonSubmit}
-                    onPress={handleSubmit((data) =>
-                        handleSubmitFreight(data))
-                    }>
-                    Calcular Frete
-                </Button>
+                <View style={styles.submitContainer} >
+                    <TouchableOpacity
+                        style={styles.touchableSubmit}
+                        onPress={handleSubmit((data) =>
+                            handleSubmitFreight(data))
+                        }>
+                        <Text style={styles.touchableLabel}>
+                            Calcular Frete
+                        </Text>
+                    </TouchableOpacity>
+                    <View style={styles.totalFreight}>
+                        <Text style={styles.totalLabel}>R${totalFreight}</Text>
+                    </View>
+                </View>
             </View>
         </View>
     );

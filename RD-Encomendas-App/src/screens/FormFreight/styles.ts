@@ -34,11 +34,35 @@ export const styles = StyleSheet.create({
     formContainer: {
         flex: 1,
         backgroundColor: themeColors.primaryAlt,
-        paddingHorizontal: 20,
+        paddingHorizontal: 35,
         paddingTop: 20,
         alignItems: "center",
+        borderTopColor: themeColors.secondary,
+        borderTopWidth: 3,
     },
-    buttonSubmit: {
+    submitContainer: {
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "space-between",
         marginTop: 40,
+        borderRadius: 15,
+        overflow: "hidden",
+    },
+    touchableSubmit: {
+        backgroundColor: themeColors.secondary,
+        padding: 20,
+        height: "100%"
+    },
+    touchableLabel: {
+        color: themeColors.white,
+    },
+    totalFreight: {
+        flexGrow: 1,
+        backgroundColor: themeColors.primary,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    totalLabel: {
+        color: themeColors.white,
     }
 })

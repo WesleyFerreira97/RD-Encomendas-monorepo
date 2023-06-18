@@ -76,4 +76,25 @@ const citiesMinasGerais = [
     }
 ];
 
+
+type PriceByDistanceProps = {
+    d10a20: number,
+    d20a30: number,
+}
+
+/**
+ * Calculates Freight
+ * @param {number} number - Prices 
+ * @returns {number} Return object with prices
+ */
+function priceByDistance(values: PriceByDistanceProps) {
+    Object.keys(values).map(() => {
+        return values
+    })
+}
+
+const priceByServiceCharge = {
+    120: priceByDistance({ 130, 140, 150, 160, 170, 180}),
+}
+
 export { citiesMinasGerais }

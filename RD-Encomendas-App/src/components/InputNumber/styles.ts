@@ -3,8 +3,8 @@ import { themeColors } from '../../style/theme';
 
 export const styles = StyleSheet.create({
     container: {
-        marginVertical: 10,
-        width: "80%",
+        marginVertical: 15,
+        width: "100%",
     },
     innerContainer: {
         flexDirection: "row",
@@ -14,9 +14,10 @@ export const styles = StyleSheet.create({
     },
     labelText: {
         fontSize: 15,
-        fontWeight: "400",
+        fontWeight: "500",
         marginBottom: 10,
         color: themeColors.white,
+        marginLeft: 15,
     },
     inputStyle: {
         color: "white",
