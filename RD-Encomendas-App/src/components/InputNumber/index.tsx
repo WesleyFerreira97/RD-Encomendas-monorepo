@@ -30,12 +30,9 @@ export function InputNumber({ name, control, ...props }: InputNumberProps) {
                     keyboardType='numeric'
                     onChangeText={field.onChange}
                     outlineColor='transparent'
-                    backgroundColor={themeColors.primaryAlt}
-                    borderRadius={0}
-                    borderTopWidth={0}
-                    borderLeftWidth={0}
-                    borderRightWidth={0}
-                    placeholderTextColor={themeColors.white}
+                    backgroundColor={themeColors.primary}
+                    borderWidth={0}
+                    placeholderTextColor={themeColors.primaryAlt}
                     style={styles.inputStyle}
                     textAlign='right'
                 />

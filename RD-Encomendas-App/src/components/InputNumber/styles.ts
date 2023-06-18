@@ -9,9 +9,7 @@ export const styles = StyleSheet.create({
     innerContainer: {
         flexDirection: "row",
         backgroundColor: themeColors.primary,
-        // borderRadius: 18,
-        borderTopRightRadius: 18,
-        borderBottomRightRadius: 18,
+        borderRadius: 18,
         overflow: "hidden",
     },
     labelText: {
