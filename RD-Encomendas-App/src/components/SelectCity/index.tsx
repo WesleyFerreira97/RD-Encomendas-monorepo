@@ -22,7 +22,6 @@ export const SelectCity = ({ control, name, defaultValue, ...props }: SelectCity
     field.value = defaultValue;
 
     const handleOnSelect = (value: string) => {
-        // console.log(value, " : value tryAgain");
 
         const filterCityByName = (name: string): CityProps | string => {
             const filtredCity = citiesMinasGerais.find(city => {

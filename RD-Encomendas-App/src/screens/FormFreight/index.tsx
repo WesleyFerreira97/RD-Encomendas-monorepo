@@ -10,6 +10,7 @@ import { useCity } from '../../hooks/useCity';
 import { Controller, useForm, useFormState } from 'react-hook-form';
 import { SelectCity } from '../../components/SelectCity';
 import { InputNumber } from '../../components/InputNumber';
+import { priceByServiceCharge } from '../../data/cities';
 
 type RoutParamsProps = {
     cityName: string;
@@ -35,6 +36,7 @@ export function FormFreight() {
     });
 
     const city = watch("selectedCity");
+    console.log(priceByServiceCharge, " : priceByServiceCharge");
 
     const handleSubmitFreight = (data: FormDataProps) => {
         console.log(data, " : Data");
