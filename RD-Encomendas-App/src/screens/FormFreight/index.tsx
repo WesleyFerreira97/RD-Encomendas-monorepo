@@ -38,7 +38,11 @@ export function FormFreight() {
     const city = watch("selectedCity");
 
     const calcByBusinessRule = ({ weight, notePrice, currentServiceChargeRange }: any) => {
+        // If weight 0 setError 
+
         if (weight >= 51) {
+            console.log("150");
+
             // Implementar calculo over 51KG
             return setTotalFreight(100);
         }
