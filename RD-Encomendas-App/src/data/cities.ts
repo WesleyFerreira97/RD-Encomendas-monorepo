@@ -78,10 +78,14 @@ const citiesMinasGerais = [
 
 type PriceByWightRange = {
     [key: string]: {
-        minWeight: string,
-        maxWeight: string,
+        minWeight: number,
+        maxWeight: number,
         price: number
     }
+};
+
+type ServiceChargeProps = {
+    [key: string]: PriceByWightRange
 }
 
 const weightRanges = [
@@ -90,7 +94,7 @@ const weightRanges = [
     { minWeight: 21, maxWeight: 30 },
     { minWeight: 31, maxWeight: 40 },
     { minWeight: 41, maxWeight: 50 },
-    { minWeight: 51, maxWeight: 51 },
+    { minWeight: 51, maxWeight: 1000 },
 ]
 
 /**
@@ -99,26 +103,23 @@ const weightRanges = [
  * @returns {number} Return object with prices
  */
 function priceByWeight(values: number[]): PriceByWightRange {
-    const final: PriceByWightRange = {};
-
-    console.log("");
-    console.log("");
-    console.log("");
+    const result: PriceByWightRange = {};
 
     for (let i = 0; i < weightRanges.length; i++) {
-        final[i] = {
-            minWeight: weightRanges[i].minWeight.toString(),
-            maxWeight: weightRanges[i].maxWeight.toString(),
+        result[i] = {
+            minWeight: weightRanges[i].minWeight,
+            maxWeight: weightRanges[i].maxWeight,
             price: values[i],
         };
     }
 
-    return final;
+    return result;
 }
 
-const priceByServiceCharge = {
+const priceByServiceCharge: ServiceChargeProps = {
     120: priceByWeight([130, 140, 150, 160, 170, 180]),
     100: priceByWeight([110, 120, 130, 140, 150, 160]),
+    90: priceByWeight([100, 110, 120, 130, 140, 150]),
     80: priceByWeight([100, 110, 120, 130, 140, 150]),
     60: priceByWeight([90, 100, 110, 120, 130, 140]),
 }

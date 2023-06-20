@@ -16,7 +16,6 @@ type InputNumberProps = {
 
 export function InputNumber({ name, control, ...props }: InputNumberProps) {
     const { field } = useController({ name, control });
-    console.log(typeof props.inputSufix, " check typeof");
 
     return (
         <View style={styles.container}>

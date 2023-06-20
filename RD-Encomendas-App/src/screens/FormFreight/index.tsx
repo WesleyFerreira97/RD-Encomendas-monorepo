@@ -36,10 +36,29 @@ export function FormFreight() {
     });
 
     const city = watch("selectedCity");
-    console.log(priceByServiceCharge, " : priceByServiceCharge");
+
+    const calcByBusinessRule = ({ weight, notePrice, currentServiceChargeRange }: any) => {
+        if (weight >= 51) {
+            // Implementar calculo over 51KG
+            return setTotalFreight(100);
+        }
+
+        Object.keys(currentServiceChargeRange).forEach((key) => {
+            const { maxWeight, minWeight, price } = currentServiceChargeRange[key];
+
+            if (weight >= minWeight && weight <= maxWeight) {
+                console.log(price, " - o preço atual é ");
+                // const freight = notePrice * key;
+                setTotalFreight(250);
+            }
+        })
+    }
 
     const handleSubmitFreight = (data: FormDataProps) => {
-        console.log(data, " : Data");
+        const { weight, notePrice, selectedCity: { serviceCharge } } = data;
+        const currentServiceChargeRange = priceByServiceCharge[serviceCharge];
+
+        calcByBusinessRule({ weight, notePrice, currentServiceChargeRange });
     }
 
     return (
