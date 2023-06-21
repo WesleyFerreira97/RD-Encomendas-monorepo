@@ -11,11 +11,23 @@ type InputNumberProps = {
     control: Control<FormDataProps, any>;
     label?: string;
     placeholder?: string;
+    rules?: UseControllerProps<FormDataProps>["rules"];
     inputSufix?: string | JSX.Element;
 }
 
 export function InputNumber({ name, control, ...props }: InputNumberProps) {
-    const { field } = useController({ name, control });
+    const greaterThanZero = (value: unknown) => {
+        return Number(value) > 0 || 'O Valor deve ser maior que 0';
+    };
+
+    const { field, fieldState } = useController({
+        name,
+        control,
+        rules: {
+            required: "Este campo é obrigatório",
+            validate: greaterThanZero,
+        },
+    });
 
     return (
         <View style={styles.container}>
@@ -47,6 +59,10 @@ export function InputNumber({ name, control, ...props }: InputNumberProps) {
                     }
                 </View>
             </View>
+
+            {fieldState.error && (
+                <Text style={styles.errorMessage}>{fieldState.error.message}</Text>
+            )}
         </View>
     );
 }

@@ -30,7 +30,12 @@ export const styles = StyleSheet.create({
         alignItems: "center",
     },
     text: {
-
         color: "#fff"
+    },
+    errorMessage: {
+        color: "#F2BE22",
+        fontWeight: "500",
+        marginLeft: 15,
+        marginTop: 5,
     }
 });

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { styles } from './styles';
 import { CityProps } from '../../@types/cities';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -18,8 +18,8 @@ type RoutParamsProps = {
 
 export type FormDataProps = {
     selectedCity: CityProps;
-    weight: number;
-    notePrice: number;
+    weight?: number;
+    notePrice?: number;
 }
 
 export function FormFreight() {
@@ -27,18 +27,23 @@ export function FormFreight() {
     const { cityName } = route.params as RoutParamsProps;
     const { currentCity } = useCity({ cityName: cityName });
     const [totalFreight, setTotalFreight] = useState(0);
-    const { control, handleSubmit, watch, formState } = useForm<FormDataProps>({
+    const { control, handleSubmit, watch, formState: { errors }, } = useForm<FormDataProps>({
         defaultValues: {
             selectedCity: currentCity,
-            weight: 0,
-            notePrice: 0,
-        }
+        },
     });
 
     const city = watch("selectedCity");
 
+    const percentageByWeight = (weight: number) => {
+        // add 1% for each KG
+        const percentage = weight * 0.01;
+        return percentage;
+    }
+
     const calcByBusinessRule = ({ weight, notePrice, currentServiceChargeRange }: any) => {
         // If weight 0 setError 
+        console.log(" Erro : Insira um peso válido");
 
         if (weight >= 51) {
             console.log("150");
