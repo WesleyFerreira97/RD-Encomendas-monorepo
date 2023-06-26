@@ -26,14 +26,21 @@ export function FormFreight() {
     const route = useRoute();
     const { cityName } = route.params as RoutParamsProps;
     const { currentCity } = useCity({ cityName: cityName });
-    const [totalFreight, setTotalFreight] = useState(0);
+    const [totalFreight, setTotalFreight] = useState<number>(0);
     const { control, handleSubmit, watch, formState: { errors }, } = useForm<FormDataProps>({
         defaultValues: {
             selectedCity: currentCity,
         },
     });
 
-    const city = watch("selectedCity");
+    // const city = watch("selectedCity");
+    const { weight, notePrice, selectedCity: city } = watch();
+
+    useEffect(() => {
+        // useEffect temporary, to reset totalFreight when change city
+        setTotalFreight(0)
+    }, [weight, notePrice, city])
+
 
     const percentageByPrice = (price: number) => {
         // add 1% for each KG
@@ -52,16 +59,15 @@ export function FormFreight() {
             const clearenceFee = 37;
             const totalFreight = (kgPrice * weight) + clearenceFee + taxByValue;
 
-            return setTotalFreight(totalFreight);
+            setTotalFreight(totalFreight.toFixed(2));
         }
 
         Object.keys(currentServiceChargeRange).forEach((key) => {
             const { maxWeight, minWeight, price } = currentServiceChargeRange[key];
 
             if (weight >= minWeight && weight <= maxWeight) {
-                console.log(price, " - o preço atual");
                 const totalFreight = taxByValue + price;
-                setTotalFreight(totalFreight);
+                setTotalFreight(totalFreight.toFixed(2));
             }
         })
     }
@@ -69,63 +75,65 @@ export function FormFreight() {
     const handleSubmitFreight = (data: FormDataProps) => {
         const { weight, notePrice, selectedCity: { serviceCharge } } = data;
         const currentServiceChargeRange = priceByServiceCharge[serviceCharge];
-        console.log(errors, " - errors");
 
         calcByBusinessRule({ weight, notePrice, currentServiceChargeRange });
     }
 
     return (
         <View style={styles.container}>
-            <View style={styles.headerSelectCity}>
-                <Buildings size={100} color={themeColors.primaryAlt} />
-                <Text style={styles.pageTitle}>
-                    {city.name}
-                </Text>
-                <Text style={styles.pageInfo}>
-                    Tarifa : {city.serviceCharge}
-                </Text>
-                <Text style={styles.pageInfo}>
-                    {city.servicesIncluded}
-                </Text>
-            </View>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <View style={styles.headerSelectCity}>
+                    <Buildings size={100} color={themeColors.primaryAlt} />
+                    <Text style={styles.pageTitle}>
+                        {city.name}
+                    </Text>
+                    <Text style={styles.pageInfo}>
+                        Tarifa : {city.serviceCharge}
+                    </Text>
+                    <Text style={styles.pageInfo}>
+                        {city.servicesIncluded}
+                    </Text>
+                </View>
 
-            <SelectCity
-                native
-                control={control}
-                name='selectedCity'
-                defaultValue={cityName}
-                style={styles.selectCityWrap}
-            />
-            <View style={styles.formContainer}>
-                <InputNumber
-                    name='weight'
+                <SelectCity
+                    native
                     control={control}
-                    placeholder='Peso em KG'
-                    label='Insira o peso total da mercadoria'
-                    inputSufix='KG'
+                    name='selectedCity'
+                    defaultValue={cityName}
+                    style={styles.selectCityWrap}
                 />
-                <InputNumber
-                    name='notePrice'
-                    control={control}
-                    placeholder='Valor da Nota Fiscal'
-                    label="Insira o valor da nota fiscal"
-                    inputSufix={<Buildings size={20} color={themeColors.primaryAlt} />}
-                />
-                <View style={styles.submitContainer} >
-                    <TouchableOpacity
-                        style={styles.touchableSubmit}
-                        onPress={handleSubmit((data) =>
-                            handleSubmitFreight(data))
-                        }>
-                        <Text style={styles.touchableLabel}>
-                            Calcular Frete
-                        </Text>
-                    </TouchableOpacity>
-                    <View style={styles.totalFreight}>
-                        <Text style={styles.totalLabel}>R${totalFreight}</Text>
+
+                <View style={styles.formContainer}>
+                    <InputNumber
+                        name='weight'
+                        control={control}
+                        placeholder='Peso em KG'
+                        label='Insira o peso total da mercadoria'
+                        inputSufix='KG'
+                    />
+                    <InputNumber
+                        name='notePrice'
+                        control={control}
+                        placeholder='Valor da Nota Fiscal'
+                        label="Insira o valor da nota fiscal"
+                        inputSufix={<Buildings size={20} color={themeColors.primaryAlt} />}
+                    />
+                    <View style={styles.submitContainer} >
+                        <TouchableOpacity
+                            style={styles.touchableSubmit}
+                            onPress={handleSubmit((data) =>
+                                handleSubmitFreight(data))
+                            }>
+                            <Text style={styles.touchableLabel}>
+                                Calcular Frete
+                            </Text>
+                        </TouchableOpacity>
+                        <View style={styles.totalFreight}>
+                            <Text style={styles.totalLabel}>R${totalFreight}</Text>
+                        </View>
                     </View>
                 </View>
-            </View>
+            </ScrollView>
         </View>
     );
 }

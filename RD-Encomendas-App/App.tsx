@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { useColorScheme } from 'react-native';
+import { SafeAreaView, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font'
 import config from './tamagui.config'
@@ -22,15 +22,17 @@ export default function App() {
 
   return (
     <TamaguiProvider config={config}>
-      <StatusBar style="auto" backgroundColor='#0C134F' translucent={false} />
-      <Theme name={colorScheme === 'dark' ? 'dark' : 'light'}>
-        <SafeAreaProvider>
-          <NavigationContainer>
-            {/* <Home /> */}
-            <AppRoutes />
-          </NavigationContainer>
-        </SafeAreaProvider>
-      </Theme>
+      <SafeAreaProvider>
+        <SafeAreaView style={{ flex: 1 }}>
+          <StatusBar style="auto" backgroundColor='#0C134F' translucent={false} />
+          <Theme name={colorScheme === 'dark' ? 'dark' : 'light'}>
+            <NavigationContainer>
+              {/* <Home /> */}
+              <AppRoutes />
+            </NavigationContainer>
+          </Theme>
+        </SafeAreaView>
+      </SafeAreaProvider>
     </TamaguiProvider>
   );
 }

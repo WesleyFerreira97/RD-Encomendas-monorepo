@@ -1,12 +1,16 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { themeColors } from '../../style/theme';
+
+const screenHeight = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection: "row",
+        flexGrow: 1,
     },
     headerSelectCity: {
-        height: "40%",
+        height: screenHeight * 0.4,
         width: "100%",
         backgroundColor: themeColors.primary,
         alignItems: 'center',
@@ -26,7 +30,7 @@ export const styles = StyleSheet.create({
     },
     selectCityWrap: {
         width: "100%",
-        // height: "100%",
+        // height: "10%",
         backgroundColor: themeColors.primary,
         zIndex: 10,
         position: "relative",
