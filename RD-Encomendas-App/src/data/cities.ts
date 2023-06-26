@@ -117,11 +117,11 @@ function priceByWeight(values: number[]): PriceByWightRange {
 }
 
 const priceByServiceCharge: ServiceChargeProps = {
-    120: priceByWeight([130, 140, 150, 160, 170, 180]),
-    100: priceByWeight([110, 120, 130, 140, 150, 160]),
-    90: priceByWeight([100, 110, 120, 130, 140, 150]),
-    80: priceByWeight([100, 110, 120, 130, 140, 150]),
-    60: priceByWeight([90, 100, 110, 120, 130, 140]),
+    120: priceByWeight([130, 140, 150, 160, 170, 1.80]),
+    100: priceByWeight([110, 120, 130, 140, 150, 1.60]),
+    90: priceByWeight([100, 110, 120, 130, 140, 1.50]),
+    80: priceByWeight([100, 110, 120, 130, 140, 1.40]),
+    60: priceByWeight([90, 100, 110, 120, 130, 1.20]),
 }
 
 export { citiesMinasGerais, priceByServiceCharge }

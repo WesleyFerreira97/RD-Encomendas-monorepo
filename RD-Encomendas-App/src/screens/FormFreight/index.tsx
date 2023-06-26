@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { styles } from './styles';
 import { CityProps } from '../../@types/cities';
@@ -35,30 +35,33 @@ export function FormFreight() {
 
     const city = watch("selectedCity");
 
-    const percentageByWeight = (weight: number) => {
+    const percentageByPrice = (price: number) => {
         // add 1% for each KG
-        const percentage = weight * 0.01;
+        const percentage = (price / 100) * 1;
         return percentage;
     }
 
     const calcByBusinessRule = ({ weight, notePrice, currentServiceChargeRange }: any) => {
-        // If weight 0 setError 
-        console.log(" Erro : Insira um peso válido");
+        const taxByValue = percentageByPrice(notePrice);
+
+        // If weight 0 reset totalFreight
+        if (weight === 0 || notePrice === 0) setTotalFreight(0);
 
         if (weight >= 51) {
-            console.log("150");
+            const kgPrice = currentServiceChargeRange[5].price;
+            const clearenceFee = 37;
+            const totalFreight = (kgPrice * weight) + clearenceFee + taxByValue;
 
-            // Implementar calculo over 51KG
-            return setTotalFreight(100);
+            return setTotalFreight(totalFreight);
         }
 
         Object.keys(currentServiceChargeRange).forEach((key) => {
             const { maxWeight, minWeight, price } = currentServiceChargeRange[key];
 
             if (weight >= minWeight && weight <= maxWeight) {
-                console.log(price, " - o preço atual é ");
-                // const freight = notePrice * key;
-                setTotalFreight(250);
+                console.log(price, " - o preço atual");
+                const totalFreight = taxByValue + price;
+                setTotalFreight(totalFreight);
             }
         })
     }
@@ -66,6 +69,7 @@ export function FormFreight() {
     const handleSubmitFreight = (data: FormDataProps) => {
         const { weight, notePrice, selectedCity: { serviceCharge } } = data;
         const currentServiceChargeRange = priceByServiceCharge[serviceCharge];
+        console.log(errors, " - errors");
 
         calcByBusinessRule({ weight, notePrice, currentServiceChargeRange });
     }
