@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         flexGrow: 1,
     },
+
     headerSelectCity: {
         height: screenHeight * 0.4,
         width: "100%",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { styles } from './styles';
 import { CityProps } from '../../@types/cities';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -131,6 +131,14 @@ export function FormFreight() {
                         <View style={styles.totalFreight}>
                             <Text style={styles.totalLabel}>R${totalFreight}</Text>
                         </View>
+                    </View>
+
+                    <View>
+                        <Text>Acrescentado 1% do valor total da nota</Text>
+                        <Text>1% de R$200 = R$2,00</Text>
+                        <Text>Este frete foi acima de 51kg</Text>
+                        <Text>69Kg, cada quilo custou R$1,83, totalizando R$126,27</Text>
+                        <Text>Adicionado taxa de despacho para fretes acima de R$51kg no valor de R$35,00</Text>
                     </View>
                 </View>
             </ScrollView>
