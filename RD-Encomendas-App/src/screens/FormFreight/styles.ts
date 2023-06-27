@@ -69,5 +69,14 @@ export const styles = StyleSheet.create({
     },
     totalLabel: {
         color: themeColors.white,
+    },
+    infoRule: {
+        color: themeColors.white,
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    infoValues: {
+        color: themeColors.primaryAlt,
+        marginBottom: 10,
     }
 })
