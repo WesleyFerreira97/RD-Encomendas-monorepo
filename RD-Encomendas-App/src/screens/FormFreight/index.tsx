@@ -22,11 +22,19 @@ export type FormDataProps = {
     notePrice?: number;
 }
 
+type FreightValuesProps = {
+    taxByValue: number;
+    notePrice: number;
+    weight: number;
+    totalFreight: number;
+}
+
 export function FormFreight() {
     const route = useRoute();
     const { cityName } = route.params as RoutParamsProps;
     const { currentCity } = useCity({ cityName: cityName });
     const [totalFreight, setTotalFreight] = useState<number>(0);
+    // const [freightValues, setFreightValues] = useState<>({} as FormDataProps);
     const [openCalcRules, setOpenCalcRules] = useState<boolean>(false);
     const { control, handleSubmit, watch, formState: { errors }, } = useForm<FormDataProps>({
         defaultValues: {
@@ -186,3 +194,8 @@ export function FormFreight() {
         </View>
     );
 }
+
+// Valor da nota fiscal
+// 1% do valor total da nota
+// Preço do kilo
+// Taxa de despacho
