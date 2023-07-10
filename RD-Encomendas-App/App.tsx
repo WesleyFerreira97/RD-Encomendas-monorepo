@@ -7,7 +7,6 @@ import { TamaguiProvider, Theme } from 'tamagui'
 import { Home } from './src/screens/Home';
 import { AppRoutes } from './src/routes';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { TestScreen } from './src/screens/TestScreen';
 
 export default function App() {
   const colorScheme = useColorScheme()
@@ -28,8 +27,7 @@ export default function App() {
           <StatusBar style="auto" backgroundColor='#0C134F' translucent={false} />
           <Theme name={colorScheme === 'dark' ? 'dark' : 'light'}>
             <NavigationContainer>
-              <TestScreen />
-              {/* <AppRoutes /> */}
+              <AppRoutes />
             </NavigationContainer>
           </Theme>
         </SafeAreaView>

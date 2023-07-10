@@ -6,6 +6,8 @@ export const styles = StyleSheet.create({
         backgroundColor: '#1D267D',
         alignItems: 'center',
         justifyContent: 'center',
+        height: "100%",
+        // flexGrow: 1,
     },
     text: {
         color: '#fff',

@@ -14,7 +14,7 @@ export function SearchInput({ ...rest }: SearchInputProps) {
     return (
         <View style={styles.inputContainer}>
             <Input
-                placeholder='Buscar Cidade'
+                placeholder={rest.placeholder}
                 size="$5"
                 flex={1}
                 style={styles.inputStyle}

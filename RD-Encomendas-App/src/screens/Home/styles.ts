@@ -9,8 +9,9 @@ export const styles = StyleSheet.create({
     listWrap: {
         height: '60%',
         width: '100%',
-        backgroundColor: '#fff',
+        flexGrow: 1,
         alignItems: 'center',
+        backgroundColor: '#fff',
     },
 
 });
