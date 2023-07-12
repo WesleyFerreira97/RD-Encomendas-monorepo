@@ -19,8 +19,8 @@ type RoutParamsProps = {
 
 export type FormDataProps = {
     selectedCity: CityProps;
-    weight?: number;
-    notePrice?: number;
+    weight: number;
+    notePrice: number;
 }
 
 type FreightValuesProps = {
@@ -35,7 +35,8 @@ export function FormFreight() {
     const { cityName } = route.params as RoutParamsProps;
     const { currentCity } = useCity({ cityName: cityName });
     const [openCalcRules, setOpenCalcRules] = useState<boolean>(false);
-    const { } = useCalcFreight();
+
+    const { freightValues, setCalcValues } = useCalcFreight();
 
     const { control, handleSubmit, watch, formState: { errors }, } = useForm<FormDataProps>({
         defaultValues: {
@@ -46,16 +47,11 @@ export function FormFreight() {
     const { weight, notePrice, selectedCity: city } = watch();
     const handleToggle = () => setOpenCalcRules((prevState) => !prevState);
 
-    useEffect(() => {
-        // useEffect temporary, to reset totalFreight when change city
-        // setTotalFreight(0)
-    }, [weight, notePrice, city])
-
     const handleSubmitFreight = (data: FormDataProps) => {
         const { weight, notePrice, selectedCity: { serviceCharge } } = data;
         const currentServiceChargeRange = priceByServiceCharge[serviceCharge];
 
-        // calcByBusinessRule({ weight, notePrice, currentServiceChargeRange });
+        setCalcValues({ weight, notePrice, currentServiceChargeRange });
     }
 
     return (
@@ -97,6 +93,7 @@ export function FormFreight() {
                         label="Insira o valor da nota fiscal"
                         inputSufix={<Buildings size={20} color={themeColors.primaryAlt} />}
                     />
+
                     <View style={styles.submitContainer} >
                         <TouchableOpacity
                             style={styles.touchableSubmit}
@@ -111,7 +108,7 @@ export function FormFreight() {
                             style={styles.totalFreight}
                             onPress={handleToggle}
                         >
-                            <Text style={styles.totalLabel}>R${totalFreight}</Text>
+                            {/* <Text style={styles.totalLabel}>R${totalFreight}</Text> */}
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -166,6 +163,8 @@ export function FormFreight() {
 }
 
 // Valor da nota fiscal
-// 1% do valor total da nota
+
+// o hook precisa retornar :
+// Valor do 1% da nota
 // Preço do kilo
 // Taxa de despacho

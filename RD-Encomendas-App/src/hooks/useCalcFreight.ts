@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 
 type FreightProps = {
-    notePrice: string;
-    weight: string;
-    serviceChargeRange: any;
+    notePrice: number;
+    weight: number;
+    currentServiceChargeRange: any;
 }
 
 type FreightValuesProps = {
@@ -13,8 +13,13 @@ type FreightValuesProps = {
     weightPrice: string;
 }
 
-export function useCalcFreight() {
-    const [calcValues, setCalcValues] = useState<FreightProps | {}>({});
+type ReturnCalcFreight = {
+    freightValues: FreightValuesProps;
+    setCalcValues: React.Dispatch<React.SetStateAction<FreightProps | null>>;
+};
+
+export function useCalcFreight(): ReturnCalcFreight {
+    const [calcValues, setCalcValues] = useState<FreightProps | null>(null);
     const [freightValues, setFreightValues] = useState<any>({});
 
     const percentageByPrice = (price: number) => {
@@ -23,28 +28,41 @@ export function useCalcFreight() {
         return percentage;
     }
 
-    const calcByBusinessRule = ({ weight, notePrice, currentServiceChargeRange }: any) => {
+    const calcByBusinessRule = ({ weight, notePrice, currentServiceChargeRange }: FreightProps) => {
         const taxByValue = percentageByPrice(notePrice);
+        let finalValues = " default values";
 
-        // If weight 0 reset totalFreight
-        if (weight === 0 || notePrice === 0) setTotalFreight(0);
+        // if (weight === 0 || notePrice === 0) finalValues = "0";
 
-        if (weight >= 51) {
-            const kgPrice = currentServiceChargeRange[5].price;
-            const clearenceFee = 37;
-            const totalFreight = (kgPrice * weight) + clearenceFee + taxByValue;
+        // if (weight >= 51) {
+        //     const kgPrice = currentServiceChargeRange[5].price;
+        //     const clearenceFee = 37;
+        //     const totalFreight = (kgPrice * weight) + clearenceFee + taxByValue;
 
-            setTotalFreight(totalFreight.toFixed(2));
-        }
+        //     return finalValues = totalFreight.toFixed(2);
+        // }
 
-        Object.keys(currentServiceChargeRange).forEach((key) => {
-            const { maxWeight, minWeight, price } = currentServiceChargeRange[key];
+        // Object.keys(currentServiceChargeRange).forEach((key) => {
+        //     const { maxWeight, minWeight, price } = currentServiceChargeRange[key];
 
-            if (weight >= minWeight && weight <= maxWeight) {
-                const totalFreight = taxByValue + price;
-                setTotalFreight(totalFreight.toFixed(2));
-            }
-        })
+        //     if (weight >= minWeight && weight <= maxWeight) {
+        //         const totalFreight = taxByValue + price;
+
+        //         return finalValues = totalFreight.toFixed(2);
+        //     }
+        // });
+
+        return finalValues;
     }
 
+    let ex = "";
+
+    if (calcValues != null) {
+        ex = calcByBusinessRule(calcValues);
+
+        console.log(ex, " example ");
+    }
+    setFreightValues(ex)
+
+    return { freightValues, setCalcValues };
 }
