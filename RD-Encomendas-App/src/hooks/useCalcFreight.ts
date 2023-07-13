@@ -8,9 +8,10 @@ type FreightProps = {
 }
 
 type FreightValuesProps = {
-    totalFreight: string;
-    taxByValue: string;
-    weightPrice: string;
+    clearenceFee?: number;
+    taxByValue: number;
+    weightPrice: number;
+    totalFreight: number;
 }
 
 type ReturnCalcFreight = {
@@ -19,7 +20,13 @@ type ReturnCalcFreight = {
 };
 
 export function useCalcFreight(): ReturnCalcFreight {
-    const [freightValues, setFreightValues] = useState<any>({});
+    const defaultFreightProps = {
+        clearenceFee: 0,
+        taxByValue: 0,
+        weightPrice: 0,
+        totalFreight: 0,
+    }
+    const [freightValues, setFreightValues] = useState<FreightValuesProps>(defaultFreightProps);
 
     const percentageByPrice = (price: number) => {
         // add 1% for each KG
@@ -27,18 +34,23 @@ export function useCalcFreight(): ReturnCalcFreight {
         return percentage;
     }
 
-    const calcByBusinessRule = ({ weight, notePrice, currentServiceChargeRange }: FreightProps) => {
+    const calcByBusinessRule = ({ weight, notePrice, currentServiceChargeRange }: FreightProps): FreightValuesProps => {
         const taxByValue = percentageByPrice(notePrice);
-        let finalValues;
 
-        if (weight === 0 || notePrice === 0) finalValues = "0";
+        let finalValues = {
+            ...defaultFreightProps,
+            taxByValue,
+        };
+
+        // if (weight === 0 || notePrice === 0) finalValues;
 
         if (weight >= 51) {
             const kgPrice = currentServiceChargeRange[5].price;
             const clearenceFee = 37;
-            const totalFreight = (kgPrice * weight) + clearenceFee + taxByValue;
+            const weightPrice = kgPrice * weight;
+            const totalFreight = weightPrice + clearenceFee + taxByValue;
 
-            return finalValues = totalFreight.toFixed(2);
+            return finalValues = { ...finalValues, ...{ weightPrice, clearenceFee, totalFreight } };
         }
 
         Object.keys(currentServiceChargeRange).forEach((key) => {
@@ -47,7 +59,7 @@ export function useCalcFreight(): ReturnCalcFreight {
             if (weight >= minWeight && weight <= maxWeight) {
                 const totalFreight = taxByValue + price;
 
-                return finalValues = totalFreight.toFixed(2);
+                return finalValues = { ...finalValues, ...{ weightPrice: price, totalFreight } };
             }
         });
 
@@ -56,6 +68,7 @@ export function useCalcFreight(): ReturnCalcFreight {
 
     const setCalcValues = (props: FreightProps) => {
         const finalValues = calcByBusinessRule(props);
+
         setFreightValues(finalValues);
     }
 

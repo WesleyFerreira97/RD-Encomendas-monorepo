@@ -54,6 +54,11 @@ export function FormFreight() {
         setCalcValues({ weight, notePrice, currentServiceChargeRange });
     }
 
+    useEffect(() => {
+        console.log(freightValues);
+
+    }, [freightValues])
+
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
