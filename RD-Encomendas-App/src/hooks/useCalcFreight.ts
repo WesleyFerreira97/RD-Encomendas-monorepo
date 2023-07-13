@@ -12,6 +12,7 @@ type FreightValuesProps = {
     taxByValue: number;
     weightPrice: number;
     totalFreight: number;
+    kgPrice?: number;
 }
 
 type ReturnCalcFreight = {
@@ -50,7 +51,7 @@ export function useCalcFreight(): ReturnCalcFreight {
             const weightPrice = kgPrice * weight;
             const totalFreight = weightPrice + clearenceFee + taxByValue;
 
-            return finalValues = { ...finalValues, ...{ weightPrice, clearenceFee, totalFreight } };
+            return finalValues = { ...finalValues, ...{ weightPrice, clearenceFee, totalFreight, kgPrice } };
         }
 
         Object.keys(currentServiceChargeRange).forEach((key) => {

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { styles } from './styles';
 import { CityProps } from '../../@types/cities';
 import { useRoute } from '@react-navigation/native';
@@ -7,7 +7,7 @@ import { Sheet } from 'tamagui';
 import { Buildings } from 'phosphor-react-native';
 import { themeColors } from '../../style/theme';
 import { useCity } from '../../hooks/useCity';
-import { Controller, useForm, useFormState } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { SelectCity } from '../../components/SelectCity';
 import { InputNumber } from '../../components/InputNumber';
 import { priceByServiceCharge } from '../../data/cities';
@@ -21,13 +21,6 @@ export type FormDataProps = {
     selectedCity: CityProps;
     weight: number;
     notePrice: number;
-}
-
-type FreightValuesProps = {
-    taxByValue: number;
-    notePrice: number;
-    weight: number;
-    totalFreight: number;
 }
 
 export function FormFreight() {
@@ -53,11 +46,6 @@ export function FormFreight() {
 
         setCalcValues({ weight, notePrice, currentServiceChargeRange });
     }
-
-    useEffect(() => {
-        console.log(freightValues);
-
-    }, [freightValues])
 
     return (
         <View style={styles.container}>
@@ -113,7 +101,7 @@ export function FormFreight() {
                             style={styles.totalFreight}
                             onPress={handleToggle}
                         >
-                            {/* <Text style={styles.totalLabel}>R${totalFreight}</Text> */}
+                            <Text style={styles.totalLabel}>R${freightValues.totalFreight}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -121,7 +109,7 @@ export function FormFreight() {
                     open={openCalcRules}
                     onOpenChange={handleToggle}
                     dismissOnSnapToBottom
-                    snapPoints={[35]}
+                    snapPoints={[45]}
                     animation="bouncy"
                 >
                     <Sheet.Handle />
@@ -148,17 +136,33 @@ export function FormFreight() {
                                 - Acrescentado 1% do valor total da nota :
                             </Text>
                             <Text style={styles.infoValues}>
-                                1% de R$200 = R$2,00
+                                1% de R${notePrice} = R${freightValues.taxByValue}
                             </Text>
-                            <Text style={styles.infoRule}>
-                                - Este frete foi acima de 51kg
-                            </Text>
-                            <Text style={styles.infoValues}>
-                                69Kg, cada quilo custou R$1,83, totalizando R$126,27
-                            </Text>
-                            <Text style={styles.infoRule}>
-                                - Adicionado taxa de despacho para fretes acima de R$51kg no valor de R$35,00
-                            </Text>
+                            {(weight > 50) ? (
+                                <>
+                                    <Text style={styles.infoRule}>
+                                        - Este frete foi acima de 51kg
+                                    </Text>
+                                    <Text style={styles.infoRule}>
+                                        - Adicionado taxa de despacho para fretes acima de R$51kg no valor de R$35,00
+                                    </Text>
+                                    <Text style={styles.infoValues}>
+                                        O Peso do frete foi: {weight}kg,
+                                        cada quilo custou R${freightValues.kgPrice},
+                                        totalizando R${freightValues.weightPrice}
+                                    </Text>
+                                    <Text style={styles.infoRule}>
+                                        Sendo R${freightValues.taxByValue}
+                                        + R$35 + R${freightValues.weightPrice} = R${freightValues.totalFreight}</Text>
+                                </>)
+                                : (
+                                    <>
+                                        <Text style={styles.infoValues}>Valor do kilo : R${freightValues.weightPrice}</Text>
+                                        <Text style={styles.infoRule}>Sendo : R${freightValues.taxByValue} +
+                                            R${freightValues.weightPrice} = R${freightValues.totalFreight} </Text>
+                                    </>
+                                )}
+
                         </View>
                     </Sheet.Frame>
                 </Sheet>
@@ -166,10 +170,3 @@ export function FormFreight() {
         </View>
     );
 }
-
-// Valor da nota fiscal
-
-// o hook precisa retornar :
-// Valor do 1% da nota
-// Preço do kilo
-// Taxa de despacho
